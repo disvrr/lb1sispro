@@ -41,7 +41,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX wcex;
 	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS;  		//стиль вікна
+	wcex.style = CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS | CS_DROPSHADOW;//стиль вікна
 	wcex.lpfnWndProc = (WNDPROC)WndProc; 		//віконна процедура
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
@@ -65,7 +65,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	hInst = hInstance; //зберігає дескриптор додатка в змінній hInst
 	hWnd = CreateWindow(szWindowClass, 	// ім’я класу вікна
 		szTitle, 				// назва програми
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, // стиль вікна
+		WS_SYSMENU | WS_MINIMIZEBOX | WS_CAPTION | WS_BORDER | WS_HSCROLL | WS_THICKFRAME, // стиль вікна
 		10, 			// положення по Х	
 		30,			// положення по Y	
 		400, 			// розмір по Х
@@ -160,7 +160,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		Shell_NotifyIcon(NIM_ADD, &tray);
 		break;
 	}
-
 	case WM_COMMAND:
 	{
 		HICON hIcon = NULL;
@@ -193,7 +192,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
-
+	case WM_SIZE:
+		// Користувач змінив розмір вікна
+		InvalidateRect(hWnd, NULL, TRUE); // Оновлюємо все вікно
+		return 0;
 	case WM_LBUTTONDBLCLK:
 		//Подвійне натискання лівої кнопки миші 
 		MessageBox(hWnd, "TEXT", "CAPTION", MB_OK);
