@@ -154,7 +154,7 @@ INT_PTR CALLBACK DialogProc3(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hDlg, DialogProc2);
 			break;
 		case IDC_BUTTON1:
-			HWND hEdit1 = GetDlgItem(hDlg, IDC_BUTTON1);
+			HWND hEdit1 = GetDlgItem(hDlg, IDC_EDIT1);
 			CHAR s_text_1[256] = { 0 };
 			SendMessage(hEdit1, WM_GETTEXT, (WPARAM)255, (LPARAM)s_text_1);
 			MessageBox(hDlg, s_text_1, "CAPTION", MB_OK);
@@ -204,10 +204,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_ABOUT_PROGRAM:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG2), hWnd, DialogProc);
-			break;
+			break; 
 		case ID_40012:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG3), hWnd, DialogProc3);
 			break;
+		case ID_NEW_WINDOW:
+		{
+			HWND hNewWnd = CreateWindow(
+				szWindowClass,           
+				"New window",           
+				WS_OVERLAPPEDWINDOW,     
+				100, 
+				100, 
+				400, 
+				300,    
+				NULL,               
+				NULL,                  
+				hInst,                
+				NULL                    
+			);
+
+			HMENU hNewMenu = LoadMenu(hInst, MAKEINTRESOURCE(IDR_MENU2));
+			SetMenu(hNewWnd, hNewMenu);
+			DrawMenuBar(hNewWnd);
+
+			ShowWindow(hNewWnd, SW_SHOW);
+			UpdateWindow(hNewWnd);
+			ShowWindow(hWnd, SW_HIDE);
+
+			break;
+		}
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
