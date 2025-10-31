@@ -1,0 +1,4 @@
+﻿  source.cpp
+C:\Users\Serg\source\repos\lb1sispro\source.cpp(37,12): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+C:\Users\Serg\source\repos\lb1sispro\source.cpp(185,32): warning C4302: 'type cast': truncation from 'LPSTR' to 'WORD'
+  lb1SproTestVersion.vcxproj -> C:\Users\Serg\source\repos\lb1sispro\x64\Debug\lb1SproTestVersion.exe
